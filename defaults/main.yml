@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-role-nodeexporter
+
+node_exporter_ersion: "1.0.1"
