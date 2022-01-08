@@ -2,12 +2,12 @@
 
 - name: Download nodeexporter
   get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{node_exporter_version}}/node_exporter-{{node_exporter_version}}.linux-amd64.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{node_exporter_version}}/node_exporter-{{node_exporter_version}}.linux-{{node_exporter_cpu_arch}}.tar.gz"
     dest: /tmp/
 
 - name: Extract nodeexporter
   unarchive:
-    src: "https://github.com/prometheus/node_exporter/releases/download/v{{node_exporter_version}}/node_exporter-{{node_exporter_version}}.linux-amd64.tar.gz"
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{node_exporter_version}}/node_exporter-{{node_exporter_version}}.linux-{{node_exporter_cpu_arch}}.tar.gz"
     dest: /tmp/
     remote_src: yes
 
@@ -16,7 +16,7 @@
     src: /tmp/node_exporter-{{node_exporter_version}}.linux-amd64/node_exporter
     remote_src: true
     dest: /usr/local/bin
-    mode: '0644'
+    mode: '0755'
 
 - name: Create group
   group: 
@@ -35,12 +35,12 @@
     dest: /etc/systemd/system/node_exporter.service
     owner: node_exporter
     group: node_exporter
-    mode: 0644
+    mode: '0755'
 
 - name: start node_exporter
   systemd: 
     state: started 
     enabled: true
-    name: node_exporter 
+    name: node_exporter
     daemon_reload: yes
     
